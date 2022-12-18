@@ -1078,6 +1078,10 @@ select {
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
 }
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
 .underline {
   text-decoration-line: underline;
 }
@@ -1249,6 +1253,34 @@ body {
 
   svg{
     display: inline;
+  }
+
+  label select{
+    width: 65px;
+  }
+
+  .btn{
+    color: #6c757d;
+    border-color: #6c757d;
+  }
+
+  .form-control{
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+  }  
+  
+  input[type=text]:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+  }
+
+  sub{
+    vertical-align: sub;
+    font-size: smaller;
+  }
+
+  .required-symbol{
+    color: red;
   }
 
   .hover\:border-gray-300:hover {

@@ -2,8 +2,8 @@
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link active" href="#">
-            <span data-feather="home" id="tim"></span>
+            <a id="dashboard" class="nav-link" href="/dashboard">
+            <span data-feather="home"></span>
             Dashboard <span class="sr-only">(current)</span>
             </a>
         </li>
@@ -32,9 +32,9 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a id="unit" class="nav-link" href="/unit">
             <span data-feather="layers"></span>
-            Integrations
+            Unit
             </a>
         </li>
         </ul>
