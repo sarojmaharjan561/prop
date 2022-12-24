@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Unit;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreUnitRequest;
 use App\Http\Requests\UpdateUnitRequest;
-use App\Models\Unit;
-use Illuminate\Support\Facades\Auth;
 
 class UnitController extends Controller
 {
@@ -87,7 +88,7 @@ class UnitController extends Controller
     public function update(UpdateUnitRequest $request)
     {
         $attributes = $request->validate([
-            'name' => 'required',
+            'name' => ['required',Rule::unique('units')->ignore($request->id),],
             'description' => 'required'
         ]);
         

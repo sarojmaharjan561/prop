@@ -160,6 +160,7 @@
                         $('#unitFormModal').modal('toggle');
                     },
                     error: function(response) {
+                        
                     },
                 });
             });        
@@ -247,6 +248,11 @@
                     $('#unitFormModal').modal('toggle');
                 },
                 error: function(response) {
+                    var myProp = 'errors';
+                    
+                    if(response.responseJSON.hasOwnProperty(myProp)){
+                        printErrorMsg(response.responseJSON.errors);
+                    }
                     // $('#nameErrorMsg').text(response.responseJSON.errors.name);
                     // $('#descriptionErrorMsg').text(response.responseJSON.errors.description);
                 },
