@@ -26,9 +26,9 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a id="billTypeNav" class="nav-link" href="/bill-type">
             <span data-feather="bar-chart-2"></span>
-            Reports
+            Bill Type
             </a>
         </li>
         <li class="nav-item">

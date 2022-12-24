@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\BillTypeController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -34,4 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-unit', [UnitController::class, 'getUnit'])->name('unit.getUnit');    
     Route::post('/update-unit', [UnitController::class, 'update'])->name('unit.updateUnit');    
     Route::delete('/delete-unit', [UnitController::class, 'destroy'])->name('unit.destroyUnit');    
+    
+    // Route for Bill Type Module
+    Route::get('/bill-type', [BillTypeController::class, 'create'])->name('billtype');
+    Route::post('/bill-type', [BillTypeController::class, 'store'])->name('billtype.store');    
+    Route::get('/get-bill-types', [BillTypeController::class, 'getBillTypes'])->name('billtype.getBillTypes');    
+    Route::get('/get-bill-type', [BillTypeController::class, 'getBillType'])->name('billtype.getBillType');    
+    Route::post('/update-bill-type', [BillTypeController::class, 'update'])->name('billtype.updateBillType');    
+    Route::delete('/delete-bill-type', [BillTypeController::class, 'destroy'])->name('billtype.destroyBillType');    
 });
