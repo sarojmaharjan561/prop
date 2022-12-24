@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\BillTypeController;
+use App\Http\Controllers\ItemTypeController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -42,5 +43,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-bill-types', [BillTypeController::class, 'getBillTypes'])->name('billtype.getBillTypes');    
     Route::get('/get-bill-type', [BillTypeController::class, 'getBillType'])->name('billtype.getBillType');    
     Route::post('/update-bill-type', [BillTypeController::class, 'update'])->name('billtype.updateBillType');    
-    Route::delete('/delete-bill-type', [BillTypeController::class, 'destroy'])->name('billtype.destroyBillType');    
+    Route::delete('/delete-bill-type', [BillTypeController::class, 'destroy'])->name('billtype.destroyBillType'); 
+    
+    // Route for Item Type Module
+    Route::get('/item-type', [ItemTypeController::class, 'create'])->name('itemtype');
+    Route::post('/item-type', [ItemTypeController::class, 'store'])->name('itemtype.store');    
+    Route::get('/get-item-types', [ItemTypeController::class, 'getItemTypes'])->name('itemtype.getItemTypes');    
+    Route::get('/get-item-type', [ItemTypeController::class, 'getItemType'])->name('itemtype.getItemType');    
+    Route::post('/update-item-type', [ItemTypeController::class, 'update'])->name('itemtype.updateItemType');    
+    Route::delete('/delete-item-type', [ItemTypeController::class, 'destroy'])->name('itemtype.destroyItemType'); 
 });

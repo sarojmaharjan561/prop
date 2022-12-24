@@ -14,9 +14,9 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a id="itemTypeNav" class="nav-link" href="/item-type">
             <span data-feather="shopping-cart"></span>
-            Products
+            Item Type
             </a>
         </li>
         <li class="nav-item">
