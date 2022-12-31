@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\BillTypeController;
 use App\Http\Controllers\ItemTypeController;
@@ -51,5 +52,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-item-types', [ItemTypeController::class, 'getItemTypes'])->name('itemtype.getItemTypes');    
     Route::get('/get-item-type', [ItemTypeController::class, 'getItemType'])->name('itemtype.getItemType');    
     Route::post('/update-item-type', [ItemTypeController::class, 'update'])->name('itemtype.updateItemType');    
-    Route::delete('/delete-item-type', [ItemTypeController::class, 'destroy'])->name('itemtype.destroyItemType'); 
+    Route::delete('/delete-item-type', [ItemTypeController::class, 'destroy'])->name('itemtype.destroyItemType');
+    
+    // Route for Item Module
+    Route::get('/item', [ItemController::class, 'create'])->name('item');
+    Route::post('/item', [ItemController::class, 'store'])->name('item.store');    
+    Route::get('/get-items', [ItemController::class, 'getItems'])->name('item.getItems');    
+    Route::get('/get-item', [ItemController::class, 'getItem'])->name('item.getItem');    
+    Route::post('/update-item', [ItemController::class, 'update'])->name('item.updateItem');    
+    Route::delete('/delete-item', [ItemController::class, 'destroy'])->name('item.destroyItem');
 });

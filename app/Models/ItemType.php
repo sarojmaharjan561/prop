@@ -15,4 +15,9 @@ class ItemType extends Model
         'created_by',
         'updated_by'
     ];
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
 }

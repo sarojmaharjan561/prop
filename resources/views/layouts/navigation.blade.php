@@ -20,9 +20,9 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a id="itemNav" class="nav-link" href="/item">
             <span data-feather="users"></span>
-            Customers
+            Item
             </a>
         </li>
         <li class="nav-item">
