@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BillController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\BillTypeController;
@@ -61,4 +62,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-item', [ItemController::class, 'getItem'])->name('item.getItem');    
     Route::post('/update-item', [ItemController::class, 'update'])->name('item.updateItem');    
     Route::delete('/delete-item', [ItemController::class, 'destroy'])->name('item.destroyItem');
+
+    // Route for Bill Module
+    Route::get('/bill', [BillController::class, 'index'])->name('bill');
+    Route::get('/add-bill', [BillController::class, 'create'])->name('createBill');
+    Route::post('/bill', [BillController::class, 'store'])->name('bill.store');    
+    Route::get('/get-bills', [BillController::class, 'getBills'])->name('bill.getBills');    
+    Route::get('/get-bill', [BillController::class, 'getBill'])->name('bill.getbill');    
+    Route::post('/update-bill', [BillController::class, 'update'])->name('bill.updateBill');    
+    Route::delete('/delete-bill', [BillController::class, 'destroy'])->name('bill.destroyBill');
 });

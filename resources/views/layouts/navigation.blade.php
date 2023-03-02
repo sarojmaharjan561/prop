@@ -8,11 +8,12 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a id="billNav" class="nav-link" href="/bill">
             <span data-feather="file"></span>
-            Orders
+            Bill
             </a>
         </li>
+        <!-- <i data-feather="trash-2"></i> -->
         <li class="nav-item">
             <a id="itemTypeNav" class="nav-link" href="/item-type">
             <span data-feather="shopping-cart"></span>
