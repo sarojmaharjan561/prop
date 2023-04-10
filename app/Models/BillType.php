@@ -14,4 +14,9 @@ class BillType extends Model
         'created_by',
         'updated_by'
     ];
+
+    public function bill()
+    {
+        return $this->hasMany(Bill::class,'type_id');
+    }
 }

@@ -16,7 +16,7 @@ class CreateBillDetailsTable extends Migration
         Schema::create('bill_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('bill_id');
-            $table->string('item');
+            $table->string('item_id');
             $table->decimal('rate', 10, 4);
             $table->unsignedInteger('quantity');
             $table->decimal('amount', 10, 4);

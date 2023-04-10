@@ -26,4 +26,10 @@ class Item extends Model
     {
         return $this->belongsTo(ItemType::class,'type_id');
     }
+
+    // public function BillDetail()
+    // {
+    //     return $this->belongsTo(BillDetail::class,'item_id');
+    // }
+    
 }

@@ -11,11 +11,16 @@ class BillDetail extends Model
 
     protected $fillable = [
         'bill_id',
-        'item',
+        'item_id',
         'rate',
         'quantity',
         'amount',
         'created_by',
         'updated_by',
     ];
+
+    public function items()
+    {
+        return $this->belongsTo(Item::class,'item_id');
+    }
 }

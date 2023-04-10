@@ -21,4 +21,9 @@ class Bill extends Model
         'created_by',
         'updated_by'
     ];
+
+    public function billType()
+    {
+        return $this->belongsTo(BillType::class,'type_id');
+    }
 }

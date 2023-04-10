@@ -8,9 +8,6 @@
             <h1 class="h2">Bill</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
-                    <!-- <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#itemFormModal">
-                        Add
-                    </button> -->
                     <a id="billNav" class="btn btn-sm btn-outline-secondary" href="/add-bill">
                         <span data-feather="plus-circle"></span>
                         Add
@@ -28,14 +25,15 @@
         </div>
 
         <div class="table-responsive">
-            <table id="item_table_id" class="table table-striped table-sm">
+            <table id="bill_table_id" class="table table-striped table-sm">
                 <thead>
                     <tr>
                     <th>#</th>
-                    <th>Item</th>
-                    <th>Type</th>
-                    <th>Last Price</th>
-                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Shop Name</th>
+                    <th>Sub Total</th>
+                    <th>Discount</th>
+                    <th>Total Amount</th>
                     <th>Action</th>
                     </tr>
                 </thead>
@@ -45,7 +43,7 @@
         </div>
         
         <!-- Modal for Create Item Type Form -->
-        <div class="modal fade" id="itemFormModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="itemFormModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -84,7 +82,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </main>
     
 @endsection
@@ -92,7 +90,7 @@
 @section('footer')
     <script>
 
-        var update_item_id = '';
+        var update_bill_id = '';
         // Select active tab      
         var url_path = window.location.pathname;
         if(url_path == '/bill'){
@@ -137,26 +135,27 @@
 
         // Load Datatable
         $(document).ready( function () {
-            var t = $('#item_table_id').DataTable( {  
+            var t = $('#bill_table_id').DataTable( {  
                 ajax: {
-                    url: '/get-items',
-                    dataSrc: 'items'
+                    url: '/get-bills',
+                    dataSrc: 'bills'
                 },
                 columns: [ 
                     { data: 'created_at',},
-                    { data: 'name' },
-                    { data: 'item_type.type' },
-                    { data: 'last_price' },
-                    { data: 'description' },
+                    { data: 'date' },
+                    { data: 'shop_name' },
+                    { data: 'sub_total' },
+                    { data: 'discount' },
+                    { data: 'total_amount' },
                 ],
                 columnDefs: [
                     { 
-                        'targets': 5, 
+                        'targets': 6, 
                         "data": null, 
-                        'defaultContent': '<button class="btn btn-sm btn-outline-primary edit-item"><span data-feather="plus-circle"></span>Edit</button>  <button class="btn btn-sm btn-outline-danger delete-item"><span data-feather="plus-circle"></span>Delete</button>'
+                        'defaultContent': '<button class="btn btn-sm btn-outline-primary edit-bill"><span data-feather="plus-circle"></span>Edit</button>  <button class="btn btn-sm btn-outline-danger delete-bill"><span data-feather="plus-circle"></span>Delete</button>'
                     },
                 ],
-                order: [[3, 'asc']],
+                order: [[1, 'asc']],
                 
             } );
             
@@ -168,45 +167,46 @@
                 });
             }).draw();
 
-            // edit item
-            $(document).on('click', '.edit-item', function(){
+            // edit bill
+            $(document).on('click', '.edit-bill', function(){
                 var data = t.row($(this).parents('tr')).data();
+                console.log(data);
+                window.location = "/add-bill/"+data.id;
+                // $.ajax({
+                //     url: "/get-bill",
+                //     type:"GET",
+                //     data:{
+                //         "_token": "{{ csrf_token() }}",
+                //         id:data.id,
+                //     },
+                //     success:function(response){
+                //         $('#name').val(response.item.name);
+                //         $('#type').val(response.item.type_id);
+                //         $('#lastPrice').val(response.item.last_price);
+                //         $('#itemDescription').val(response.item.description);
 
-                $.ajax({
-                    url: "/get-item",
-                    type:"GET",
-                    data:{
-                        "_token": "{{ csrf_token() }}",
-                        id:data.id,
-                    },
-                    success:function(response){
-                        $('#name').val(response.item.name);
-                        $('#type').val(response.item.type_id);
-                        $('#lastPrice').val(response.item.last_price);
-                        $('#itemDescription').val(response.item.description);
+                        
+                //         update_bill_id = response.item.id;
+                        
+                //         $('#addNewitem').hide();
+                //         $('#updateitem').show();
 
+                //         $('#addItemModalLabel').hide();
+                //         $('#updateItemModalLabel').show();        
                         
-                        update_item_id = response.item.id;
+                //         $('#itemFormModal').modal('toggle');
+                //     },
+                //     error: function(response) {
                         
-                        $('#addNewitem').hide();
-                        $('#updateitem').show();
-
-                        $('#addItemModalLabel').hide();
-                        $('#updateItemModalLabel').show();        
+                //     },
+                //     complete: function() {
+                //         setTimeout(() => {
+                //             $('.selectpicker').selectpicker('refresh');
+                //             console.log('here');                    
+                //         }, 550);
                         
-                        $('#itemFormModal').modal('toggle');
-                    },
-                    error: function(response) {
-                        
-                    },
-                    complete: function() {
-                        setTimeout(() => {
-                            $('.selectpicker').selectpicker('refresh');
-                            console.log('here');                    
-                        }, 550);
-                        
-                    }
-                });
+                //     }
+                // });
             });        
 
             // delete item
@@ -230,7 +230,7 @@
                                 id:data.id,
                             },
                             success:function(response){
-                                $('#item_table_id').DataTable().ajax.reload();
+                                $('#bill_table_id').DataTable().ajax.reload();
                             },
                             error: function(response) {
                             },
@@ -261,7 +261,7 @@
                     description:description,
                 },
                 success:function(response){
-                    $('#item_table_id').DataTable().ajax.reload();
+                    $('#bill_table_id').DataTable().ajax.reload();
                     $('#itemFormModal').modal('toggle');
                 },
                 error: function(response) {
@@ -292,10 +292,10 @@
                     type_id:type,
                     last_price:last_price,
                     description:description,
-                    id: update_item_id
+                    id: update_bill_id
                 },
                 success:function(response){
-                    $('#item_table_id').DataTable().ajax.reload();
+                    $('#bill_table_id').DataTable().ajax.reload();
                     $('#itemFormModal').modal('toggle');
                 },
                 error: function(response) {

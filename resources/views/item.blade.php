@@ -198,8 +198,7 @@
                     },
                     complete: function() {
                         setTimeout(() => {
-                            $('.selectpicker').selectpicker('refresh');
-                            console.log('here');                    
+                            $('.selectpicker').selectpicker('refresh');      
                         }, 550);
                         
                     }

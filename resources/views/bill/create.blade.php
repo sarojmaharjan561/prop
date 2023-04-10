@@ -14,9 +14,13 @@
                     </button>
                 </div>
                 <div class="btn-group mr-2">
-                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="saveBill()" >
+                    <button id="saveBillBtn" type="button" style="display: none;" class="btn btn-sm btn-outline-secondary" onclick="saveBill()" >
                         <span data-feather="plus-circle"></span>
                         Save
+                    </button>
+                    <button id="updateBillBtn" type="button" style="display: none;" class="btn btn-sm btn-outline-secondary" onclick="updateBill()" >
+                        <span data-feather="plus-circle"></span>
+                        Update
                     </button>
                 </div>
             </div>
@@ -100,19 +104,83 @@
 @section('footer')
     <script>
 
-        var update_item_id = '';
+        var update_bill_id = '';
 
         // Select active tab      
-        var url_path = window.location.pathname;
-        if(url_path == '/add-bill'){
+        var url_path = window.location.pathname.split('/');
+
+        
+        if(url_path[1] == '/add-bill'){
             var element = document.getElementById('billNav');
             element.classList.add('active');
         }
 
+        if(url_path[2]!==undefined){
+            update_bill_id = url_path[2];
+        }
+
         $(document).ready(function(){
+            if(update_bill_id != ''){
+                $('#updateBillBtn').show();
+                loadBillDetail();
+            }else{
+                $('#saveBillBtn').show();
+            }
             loadItems();
             loadBillTypes();
         });
+
+        function loadBillDetail(){
+            $.ajax({
+                url : "/get-bill",
+                type:'GET',
+                data:{
+                        "_token": "{{ csrf_token() }}",
+                        id:update_bill_id,
+                    },
+                dataType: 'json',
+                success: function(response) {
+                    shop_name = $('#shopName').val(response.bill.bill.shop_name);
+                    bill_type = Number.parseInt($('#billType').val(response.bill.bill.type_id));
+                    bill_date = $('#billDate').val(response.bill.bill.date.slice(0, 10));
+                    sub_total = $('#subTotal').val(response.bill.bill.sub_total);
+                    grand_total = $('#grandTotal').val(response.bill.bill.total_amount);
+                    discount = $('#discount').val(response.bill.bill.discount);
+                    
+                    $.each(response.bill.bill_detail,function(key, value)
+                    {
+                        let item = {};
+                        item.id = value.item_id;
+                        item.name = value.items.name;
+                        // item.name = $("#item").find("option:selected").attr('data-name');
+                        item.quantity = value.quantity;
+                        item.rate = Number.parseFloat(value.rate);
+                        item.amount = Number.parseFloat(value.amount);;
+                        items.push(item);
+            
+                        var table = document.getElementById("itemTable");
+                        var rowCount = table.rows.length;
+                        var row = table.insertRow(rowCount);
+                        row.insertCell(0).innerHTML= rowCount;
+                        row.insertCell(1).innerHTML= item.name;
+                        row.insertCell(2).innerHTML= item.rate;
+                        row.insertCell(3).innerHTML= item.quantity;
+                        row.insertCell(4).innerHTML= item.amount;
+                        row.insertCell(5).innerHTML= '<a id="item_'+item.id+'" item-id = '+item.id+' class="delete-icon delete-item" onclick="deleteItem('+item.id+')"><span data-feather="trash-2"></span></a>';
+            
+                        $("#item").val('default').selectpicker("refresh");
+                        $('#rate').val(0);
+                        $('#quantity').val(0);
+                        feather.replace();
+                    });
+                    grandCalculation();
+
+                    setTimeout(() => {
+                        $('.selectpicker').selectpicker('refresh');               
+                    }, 0);
+                }
+            });            
+        }
 
         function printErrorMsg (msg) {
             $(".print-error-msg").find("ul").html('');
@@ -147,7 +215,7 @@
                 success: function(response) {
                     $.each(response.bill_types,function(key, value)
                     {
-                        console.log(value);
+                        // console.log(value);
                        $("#billType").append('<option value=' + value['id'] + ' data-type='+ value['type'] + '>' + value['type'] + '</option>');
                     });
                     $('.selectpicker').selectpicker('refresh');
@@ -178,7 +246,7 @@
             let item_exist = false;
 
             items.forEach(element => {
-                if(element.id === $('#item').val()){
+                if(element.item_id == $('#item').val()){
                     item_exist = true;
                 }
             });
@@ -187,6 +255,7 @@
 
                 let item = {};
                 item.id = $('#item').val();
+                console.log(item.id);
                 item.name = $("#item").find("option:selected").attr('data-name');
                 item.quantity = $('#quantity').val();
                 item.rate = $('#rate').val();
@@ -257,6 +326,44 @@
                 type:"POST",
                 data:{
                     "_token": "{{ csrf_token() }}",
+                    type_id:bill_type,
+                    date:bill_date,
+                    paid_date:bill_date,
+                    shop_name:shop_name,
+                    sub_total:sub_total,
+                    discount:discount,
+                    total_amount:grand_total,
+                    description:'',
+                    items: items
+
+                },
+                dataType: 'JSON',
+                success:function(response){
+                    window.location = "/bill";
+                },
+                error: function(response) {
+                    var myProp = 'errors';
+                    
+                    if(response.responseJSON.hasOwnProperty(myProp)){
+                        printErrorMsg(response.responseJSON.errors);
+                    }
+                },
+            });
+        }
+
+        function updateBill(){
+            // validation remaining
+
+            var shop_name = $('#shopName').val();
+            var bill_type = $('#billType').val();
+            var bill_date = $('#billDate').val();
+            
+            $.ajax({
+                url: "/update-bill",
+                type:"POST",
+                data:{
+                    "_token": "{{ csrf_token() }}",
+                    update_bill_id: update_bill_id,
                     type_id:bill_type,
                     date:bill_date,
                     paid_date:bill_date,

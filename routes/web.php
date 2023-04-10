@@ -65,7 +65,7 @@ Route::middleware('auth')->group(function () {
 
     // Route for Bill Module
     Route::get('/bill', [BillController::class, 'index'])->name('bill');
-    Route::get('/add-bill', [BillController::class, 'create'])->name('createBill');
+    Route::get('/add-bill/{id?}', [BillController::class, 'create'])->name('createBill');
     Route::post('/bill', [BillController::class, 'store'])->name('bill.store');    
     Route::get('/get-bills', [BillController::class, 'getBills'])->name('bill.getBills');    
     Route::get('/get-bill', [BillController::class, 'getBill'])->name('bill.getbill');    
