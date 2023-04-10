@@ -128,4 +128,12 @@ class BillController extends Controller
         }        
         return response()->json(['success' => 'Successfully']);
     }
+
+    public function destroy(Request $request)
+    {
+        // dd($request->all());
+        Bill::find($request->id)->delete();
+        BillDetail::where('bill_id', $request->id)->delete();
+        return response()->json(['success'=>'Successfully']);
+    }
 }

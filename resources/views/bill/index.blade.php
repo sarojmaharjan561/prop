@@ -209,8 +209,8 @@
                 // });
             });        
 
-            // delete item
-            $(document).on('click', '.delete-item', function(){
+            // delete bill
+            $(document).on('click', '.delete-bill', function(){
                 
                 Swal.fire({
                     icon: 'warning',
@@ -223,7 +223,7 @@
                         var data = t.row($(this).parents('tr')).data();
         
                         $.ajax({
-                            url: "/delete-item",
+                            url: "/delete-bill",
                             type:"DELETE",
                             data:{
                                 "_token": "{{ csrf_token() }}",
@@ -241,74 +241,74 @@
         } );
 
         // add item
-        $('#addNewitem').on('click',function(e){
+        // $('#addNewitem').on('click',function(e){
             
-            e.preventDefault();            
+        //     e.preventDefault();            
 
-            let name = $('#name').val();
-            let type = $('#type').val();
-            let last_price = $('#lastPrice').val();
-            let description = $('#itemDescription').val();
+        //     let name = $('#name').val();
+        //     let type = $('#type').val();
+        //     let last_price = $('#lastPrice').val();
+        //     let description = $('#itemDescription').val();
             
-            $.ajax({
-                url: "/item",
-                type:"POST",
-                data:{
-                    "_token": "{{ csrf_token() }}",
-                    name:name,
-                    type_id:type,
-                    last_price:last_price,
-                    description:description,
-                },
-                success:function(response){
-                    $('#bill_table_id').DataTable().ajax.reload();
-                    $('#itemFormModal').modal('toggle');
-                },
-                error: function(response) {
-                    var myProp = 'errors';
+        //     $.ajax({
+        //         url: "/item",
+        //         type:"POST",
+        //         data:{
+        //             "_token": "{{ csrf_token() }}",
+        //             name:name,
+        //             type_id:type,
+        //             last_price:last_price,
+        //             description:description,
+        //         },
+        //         success:function(response){
+        //             $('#bill_table_id').DataTable().ajax.reload();
+        //             $('#itemFormModal').modal('toggle');
+        //         },
+        //         error: function(response) {
+        //             var myProp = 'errors';
                     
-                    if(response.responseJSON.hasOwnProperty(myProp)){
-                        printErrorMsg(response.responseJSON.errors);
-                    }
-                },
-            });
-        });
+        //             if(response.responseJSON.hasOwnProperty(myProp)){
+        //                 printErrorMsg(response.responseJSON.errors);
+        //             }
+        //         },
+        //     });
+        // });
 
         // update item
-        $('#updateitem').on('click',function(e){
-            e.preventDefault();
+        // $('#updateitem').on('click',function(e){
+        //     e.preventDefault();
 
-            let name = $('#name').val();
-            let type = $('#type').val();
-            let last_price = $('#lastPrice').val();
-            let description = $('#itemDescription').val();
+        //     let name = $('#name').val();
+        //     let type = $('#type').val();
+        //     let last_price = $('#lastPrice').val();
+        //     let description = $('#itemDescription').val();
             
-            $.ajax({
-                url: "/update-item",
-                type:"POST",
-                data:{
-                    "_token": "{{ csrf_token() }}",
-                    name:name,
-                    type_id:type,
-                    last_price:last_price,
-                    description:description,
-                    id: update_bill_id
-                },
-                success:function(response){
-                    $('#bill_table_id').DataTable().ajax.reload();
-                    $('#itemFormModal').modal('toggle');
-                },
-                error: function(response) {
-                    var myProp = 'errors';
+        //     $.ajax({
+        //         url: "/update-item",
+        //         type:"POST",
+        //         data:{
+        //             "_token": "{{ csrf_token() }}",
+        //             name:name,
+        //             type_id:type,
+        //             last_price:last_price,
+        //             description:description,
+        //             id: update_bill_id
+        //         },
+        //         success:function(response){
+        //             $('#bill_table_id').DataTable().ajax.reload();
+        //             $('#itemFormModal').modal('toggle');
+        //         },
+        //         error: function(response) {
+        //             var myProp = 'errors';
                     
-                    if(response.responseJSON.hasOwnProperty(myProp)){
-                        printErrorMsg(response.responseJSON.errors);
-                    }
-                    // $('#nameErrorMsg').text(response.responseJSON.errors.name);
-                    // $('#descriptionErrorMsg').text(response.responseJSON.errors.description);
-                },
-            });
-        });
+        //             if(response.responseJSON.hasOwnProperty(myProp)){
+        //                 printErrorMsg(response.responseJSON.errors);
+        //             }
+        //             // $('#nameErrorMsg').text(response.responseJSON.errors.name);
+        //             // $('#descriptionErrorMsg').text(response.responseJSON.errors.description);
+        //         },
+        //     });
+        // });
 
 
         function printErrorMsg (msg) {
